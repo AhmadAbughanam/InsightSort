@@ -1,0 +1,53 @@
+# ------------------ Paths ------------------
+
+model_path: "models/mistral-7b-instruct-v0.1.Q2_K.gguf"
+output_dir: "output"
+organized_dir: "output/organized"
+report_csv: "output/report.csv"
+memory_db: "output/insight_memory.db"
+log_file: "logs/process_log.txt"
+
+# ------------------ LLM Settings ------------------
+
+llm:
+  model: "phi-2"
+  max_tokens: 100
+  temperature: 0.3
+  context_window: 2048
+  threads: 8
+
+# ------------------ Classifier Behavior ------------------
+
+classifier:
+  use_llm_first: true # Set to false to start with rule-based
+  fallback_to_rule: true # If LLM fails, fallback
+
+# ------------------ Prompt Settings ------------------
+
+topics:
+  - Tech
+  - Health
+  - Finance
+  - Education
+  - Legal
+  - Personal
+  - Notes
+  - Misc
+
+prompt_template: |
+  You are a smart document classifier. Classify the following document into one of the following categories:
+  {categories}
+
+  Document:
+  """
+  {text}
+  """
+
+  Respond only with the topic name, nothing else.
+
+# ------------------ Extractor Settings ------------------
+
+extractor:
+  summary_sentences: 3
+  keywords_count: 5
+  llm_mode: true # Set to false to use TF-IDF / rule-based
